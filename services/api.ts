@@ -5,6 +5,14 @@ export const NHL_CONFIG = {
     }
 };
 
+export const fetchGame = async (id: string) => {
+    const endpoint = `${NHL_CONFIG.BASE_URL}/gamecenter/${id}/landing`;
+    const response = await fetch(endpoint, {
+        headers: NHL_CONFIG.headers
+    });
+    return response.json();
+}
+
 export const fetchSchedule = async ( season?: string ) => {
     const endpoint = season
         ? `${NHL_CONFIG.BASE_URL}/schedule/${season}` : `${NHL_CONFIG.BASE_URL}/schedule/now`;
