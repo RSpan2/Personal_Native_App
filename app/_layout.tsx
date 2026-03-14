@@ -11,7 +11,8 @@ return (
           name="(tabs)"
           options={{ 
             headerShown: false,
-            title: "Schedule"
+            title: "Schedule",
+            contentStyle: { backgroundColor: '#030712' }
           }}
         />
         <Stack.Screen 
