@@ -65,7 +65,7 @@ const GameDetails = ({ data }: { data: any }) => {
                                 period.goals.map((goal: any, j: number) => {
                                     const isAway = goal.teamAbbrev.default === data?.awayTeam.abbrev;
                                     const winnerScore = winnerIsAway ? goal.awayScore : goal.homeScore;
-                                    const isGWG = winnerScore === gwgThreshold;
+                                    const isGWG = winnerScore === gwgThreshold && (winnerIsAway === isAway);
                                     const photo = (
                                         <Image
                                             source={{ uri: goal.headshot }}

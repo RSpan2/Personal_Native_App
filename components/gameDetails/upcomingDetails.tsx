@@ -2,8 +2,23 @@ import { Link, Stack } from "expo-router";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SvgUri } from 'react-native-svg';
+import PlayerStatRow from "@/components/PlayerStatRow";
 
-const GameDetails = ({ data }: { data: any }) => {
+type Skater = {
+    playerId: number;
+    headshot: string;
+    firstName: { default: string };
+    lastName: { default: string };
+    goals: number;
+    assists: number;
+    points: number;
+};
+
+type TeamStats = {
+    skaters: Skater[];
+};
+
+const GameDetails = ({ data, awayStats, homeStats }: { data: any; awayStats: any; homeStats:any }) => {
     const [year, month, day] = (data?.gameDate ?? '').split('-').map(Number);
 
     const gameDate = new Date(year, month - 1, day).toLocaleDateString([], { 
@@ -14,6 +29,18 @@ const GameDetails = ({ data }: { data: any }) => {
         hour: '2-digit', 
         minute: '2-digit' 
     });
+    
+
+
+
+const awaygoalLeader = awayStats?.skaters?.reduce((a: Skater, b: Skater) => a.goals > b.goals ? a : b);
+const awayAssistLeader = awayStats?.skaters?.reduce((a: Skater, b: Skater) => a.assists > b.assists ? a : b);
+const awayPointsLeader = awayStats?.skaters?.reduce((a: Skater, b: Skater) => a.points > b.points ? a : b);
+
+const homeGoalLeader = homeStats?.skaters?.reduce((a: Skater, b: Skater) => a.goals > b.goals ? a : b);
+const homeAssistLeader = homeStats?.skaters?.reduce((a: Skater, b: Skater) => a.assists > b.assists ? a : b);
+const homePointsLeader = homeStats?.skaters?.reduce((a: Skater, b: Skater) => a.points > b.points ? a : b);
+
     return (
         <ScrollView
           className="flex-1 bg-background"
@@ -54,7 +81,20 @@ const GameDetails = ({ data }: { data: any }) => {
                 <   Text className="text-blue-400 text-3xl font-bold mt-1">Buy Tickets</Text>
                 </Link>
             </View>
-            
+            <View className="flex-1 flex-row mt-5">
+                {/* Away Team */}
+                <View className="flex-1">
+                    <PlayerStatRow player={awaygoalLeader} stat={awaygoalLeader?.goals} label="G" />
+                    <PlayerStatRow player={awayAssistLeader} stat={awayAssistLeader?.assists} label="A" />
+                    <PlayerStatRow player={awayPointsLeader} stat={awayPointsLeader?.points} label="Pts" />
+                </View>
+                {/* Home Team */}
+                <View className="flex-1">
+                    <PlayerStatRow player={homeGoalLeader} stat={homeGoalLeader?.goals} label="G" reverse />
+                    <PlayerStatRow player={homeAssistLeader} stat={homeAssistLeader?.assists} label="A" reverse />
+                    <PlayerStatRow player={homePointsLeader} stat={homePointsLeader?.points} label="Pts" reverse />
+                </View>
+            </View>
         </ScrollView>
     )
 }

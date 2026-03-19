@@ -22,3 +22,12 @@ export const fetchSchedule = async ( season?: string ) => {
     }) 
     return response.json();
 }
+
+export const fetchTeamStats = async (team?: string) => {
+    const endpoint = `${NHL_CONFIG.BASE_URL}/club-stats/${team}/now`;
+    
+    const response = await fetch(endpoint, {
+        headers: NHL_CONFIG.headers
+    }) 
+    return response.json();
+}

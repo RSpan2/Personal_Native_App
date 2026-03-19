@@ -19,7 +19,8 @@ const FutureGame = ({ id, awayTeam, homeTeam, startTimeUTC, date }: {
     const gameDate = new Date(year, month - 1, day).toLocaleDateString([], { 
         month: 'short', 
         day: 'numeric' 
-    });
+});
+
 
     return (
         <Link href={`/game/${id}` as any} asChild>

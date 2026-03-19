@@ -56,7 +56,7 @@ const Schedule = () => {
             const newDays = data.gameWeek.filter((d: any) => !existingDates.has(d.date));
             if (newDays.length > 0) {
                 setGameWeek(prev => [...newDays, ...prev]);
-                setDayIndex(i => i + newDays.length); // shift by actual new days, not full response
+                setDayIndex(i => i + newDays.length - 1); // shift to maintain current day, minus 1 to navigate back
             }
         } finally {
             isFetching.current = false;
